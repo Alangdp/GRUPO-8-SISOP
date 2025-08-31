@@ -10,15 +10,15 @@ Estimular a capacidade do aluno de trabalhar em equipe para organizar, projetar 
 
 ## 7. Premissas a serem definidas pelo grupo para o Desenvolvimento do Simulador
 
-- Limite máximo de processos criados: 10 PROCESSOS;
+- Limite máximo de processos criados: 10 PROCESSOS; [ATENDIDO]
 - Definição da fatia de tempo dada aos processos em execução: 2 QUANTUM; [ATENDIDO]
 - Tempos de serviço e de I/O aleatórios para cada processo criado; [ATENDIDO]
-- Tempos de duração de cada tipo de I/O (disco, fita magnética e impressora);
-- Gerência de Processos: definição do PID, informações do PCB (prioridade, PID, PPID, status);
-- Escalonador com pelo menos 3 filas: alta prioridade, baixa prioridade e fila(s) de I/O;
-- Tipos de I/O:
+- Tempos de duração de cada tipo de I/O (disco, fita magnética e impressora); [ATENDIDO]
+- Gerência de Processos: definição do PID, informações do PCB (prioridade, PID, PPID, status); [ATENDIDO]
+- Escalonador com pelo menos 3 filas: alta prioridade, baixa prioridade e fila(s) de I/O; [ATENDIDO]
+- Tipos de I/O: [ATENDIDO]
   - Disco → fila baixa;
   - Fita magnética → fila alta;
   - Impressora → fila alta;
-- Ordem de entrada na fila de prontos: novos processos → fila alta; processos de I/O → depende do tipo; preempção → fila baixa.
+- Ordem de entrada na fila de prontos: novos processos → fila alta; processos de I/O → depende do tipo; preempção → fila baixa. [ATENDIDO]
 

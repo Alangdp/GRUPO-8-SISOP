@@ -154,42 +154,6 @@ public class EscalonadorUI {
      * - Imprime o estado atual dos processos no console.
      */
     static void avancarSimulacao() {
-        // Loop da fila de IO
-        // Loop feito iniciando no final para facilitar remoção
-        // Caso fosse do início teria que ajustar o índice ao remover
-        for (int i = tamFilaIO - 1; i >= 0; i--) {
-            temposIO[i] -= QUANTUM;
-            tempoTotalIO += QUANTUM;
-            if (temposIO[i] <= 0) {
-                int idx = filaIO[i];
-                int tipo = tiposIO[i];
-                PCB pcb = pcbs[idx];
-                pcb.status = "PRONTO";
-                int tempoRestanteAntes = pcb.restante;
-                // Remove da fila de IO
-                for (int j = i; j < tamFilaIO - 1; j++) {
-                    filaIO[j] = filaIO[j + 1];
-                    tiposIO[j] = tiposIO[j + 1];
-                    temposIO[j] = temposIO[j + 1];
-                }
-                tamFilaIO--;
-                // Regras de retorno
-                // - Tipos de I/O:
-                //  - Disco → fila baixa;
-                //  - Fita magnética → fila alta;
-                //  - Impressora → fila alta;
-                if (tipo == IO_DISCO) {
-                    filaBaixa[tamFilaBaixa++] = idx;
-                    pcb.prioridade = 0;
-                } else {
-                    filaAlta[tamFilaAlta++] = idx;
-                    pcb.prioridade = 1;
-                }
-                blocosTamanhos[tamLinhaTempo] = tempoRestanteAntes;
-                linhaTempo[tamLinhaTempo++] = pcb.nome + ":IOFIM" + IO_NOMES[tipo];
-            }
-        }
-
         // Índice do processo a ser executado
         int idx = -1;
         // Seleciona próximo processo a executar (prioridade alta primeiro)
@@ -232,6 +196,43 @@ public class EscalonadorUI {
                 }
             }
         }
+
+        // Loop da fila de IO
+        // Loop feito iniciando no final para facilitar remoção
+        // Caso fosse do início teria que ajustar o índice ao remover
+        for (int i = tamFilaIO - 1; i >= 0; i--) {
+            temposIO[i] -= QUANTUM;
+            tempoTotalIO += QUANTUM;
+            if (temposIO[i] <= 0) {
+                idx = filaIO[i];
+                int tipo = tiposIO[i];
+                PCB pcb = pcbs[idx];
+                pcb.status = "PRONTO";
+                int tempoRestanteAntes = pcb.restante;
+                // Remove da fila de IO
+                for (int j = i; j < tamFilaIO - 1; j++) {
+                    filaIO[j] = filaIO[j + 1];
+                    tiposIO[j] = tiposIO[j + 1];
+                    temposIO[j] = temposIO[j + 1];
+                }
+                tamFilaIO--;
+                // Regras de retorno
+                // - Tipos de I/O:
+                //  - Disco → fila baixa;
+                //  - Fita magnética → fila alta;
+                //  - Impressora → fila alta;
+                if (tipo == IO_DISCO) {
+                    filaBaixa[tamFilaBaixa++] = idx;
+                    pcb.prioridade = 0;
+                } else {
+                    filaAlta[tamFilaAlta++] = idx;
+                    pcb.prioridade = 1;
+                }
+                blocosTamanhos[tamLinhaTempo] = tempoRestanteAntes;
+                linhaTempo[tamLinhaTempo++] = pcb.nome + ":IOFIM" + IO_NOMES[tipo];
+            }
+        }
+
         timelinePanel.repaint();
     }
 

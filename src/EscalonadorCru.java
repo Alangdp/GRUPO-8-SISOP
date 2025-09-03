@@ -94,7 +94,7 @@ public class EscalonadorCru {
             int pid = i;
             // Inicialmente nenhum processo tem pai
             int ppid = -1;
-            // Inicialmente todos os processos são de alta prioridade (Acho que não deve ser assim, mas não tenho certeza)
+            // Inicialmente todos os processos são de alta prioridade
             int prioridade = 1; 
             // Sequencial para nome 
             // PA...PB...PC...
@@ -169,10 +169,6 @@ public class EscalonadorCru {
         
         // Índice do processo a ser executado
         int idx = -1;
-        // Essa jeito que a fila processa não sei se está correto. Pois pode haver o seguinte problema. Se houver...
-        // ...muitos processos de alta prioridade, um processo de baixa prioridade pode nunca ser executado...
-        // ...não me recordo se na aula foi falado algo do tipo.
-        
         // Seleciona próximo processo a executar (prioridade alta primeiro)
         if (tamFilaAlta > 0) {
             idx = filaAlta[0];
@@ -193,7 +189,7 @@ public class EscalonadorCru {
             PCB pcb = pcbs[idx];
             // Simula chance de ir para I/O (20%)
             if (pcb.restante > 0 && Math.random() < 0.2) {
-                // O tipo de I/O é escolhido aleatoriamente (TEMOS QUE CHECAR COM A PROFESSORA SE É ASSIM MESMO)
+                // O tipo de I/O é escolhido aleatoriamente
                 int tipoIO = geraNumeroIntervalo(0, 2);
                 // Tempo de I/O é o tempo fixo para o tipo de I/O + um acrescimo aleatório de 0 a 2
                 int tempoIO = IO_TEMPOS[tipoIO] + geraNumeroIntervalo(0, 2); // base + 0~2
@@ -227,6 +223,8 @@ public class EscalonadorCru {
                 }
             }
         }
+
+        imprimirEstado();
     }
 
     /**
